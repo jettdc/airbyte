@@ -76,6 +76,8 @@ def convert_ab_field_to_foundry_field(ab_field_name: Optional[str], ab_field_sch
         else:
             array_subtype = convert_ab_field_to_foundry_field(None, item_type)
 
+        # TODO(jcrowson): handle multiple array item types by stringifying
+
         return ArrayFieldSchema(
             name=ab_field_name,
             nullable=nullable,
