@@ -159,3 +159,11 @@ class FoundrySchema(BaseModel):
     fieldSchemaList: List[FoundryFieldSchema]
     dataFrameReaderClass: str
     customMetadata: Dict
+
+    @model_serializer
+    def ser(self):
+        return {
+            "fieldSchemaList": [field.ser() for field in self.fieldSchemaList],
+            "dataFrameReaderClass": self.dataFrameReaderClass,
+            "customMetadata": self.customMetadata
+        }
