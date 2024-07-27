@@ -73,17 +73,6 @@ class DoubleFieldSchema(FoundryFieldSchemaBase):
         }
 
 
-class FloatFieldSchema(FoundryFieldSchemaBase):
-    type_: Literal["FLOAT"] = Field("FLOAT", alias='type')
-
-    @model_serializer
-    def ser(self):
-        return {
-            **self._base_to_dict(),
-            "type": self.type_,
-        }
-
-
 class IntegerFieldSchema(FoundryFieldSchemaBase):
     type_: Literal["INTEGER"] = Field("INTEGER", alias='type')
 
@@ -95,6 +84,7 @@ class IntegerFieldSchema(FoundryFieldSchemaBase):
         }
 
 
+# TODO(jcrowson): Either remove or replace all ints with this
 class LongFieldSchema(FoundryFieldSchemaBase):
     type_: Literal["LONG"] = Field("LONG", alias='type')
 
@@ -146,7 +136,6 @@ FoundryFieldSchema = Annotated[Union[
     BooleanFieldSchema,
     DateFieldSchema,
     DoubleFieldSchema,
-    FloatFieldSchema,
     IntegerFieldSchema,
     LongFieldSchema,
     StringFieldSchema,

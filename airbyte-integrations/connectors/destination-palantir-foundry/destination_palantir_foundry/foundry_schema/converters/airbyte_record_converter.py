@@ -36,9 +36,6 @@ def convert_field(value: Any, field_schema: FoundryFieldSchema):
 
         return [convert_field(item, field_schema.arraySubtype) for item in value]
 
-    elif field_schema.type_ == "BINARY":
-        raise NotImplementedError("BINARY type not yet implemented.")
-
     elif field_schema.type_ == "BOOLEAN":
         if isinstance(value, str) and value.lower() == "true":
             return True
@@ -51,9 +48,6 @@ def convert_field(value: Any, field_schema: FoundryFieldSchema):
 
         raise ValueError(f"Cannot parse boolean type {value}")
 
-    elif field_schema.type_ == "BYTE":
-        raise NotImplementedError("BYTE type not yet implemented.")
-
     elif field_schema.type_ == "DATE":
         if isinstance(value, str):
             if value.endswith("BC"):
@@ -62,9 +56,6 @@ def convert_field(value: Any, field_schema: FoundryFieldSchema):
             return value
 
         raise ValueError(f"Cannot parse nonstring date type {value}")
-
-    elif field_schema.type_ == "DECIMAL":
-        raise NotImplementedError("DECIMAL type not yet implemented.")
 
     elif field_schema.type_ == "DOUBLE":
         # may throw
@@ -78,13 +69,6 @@ def convert_field(value: Any, field_schema: FoundryFieldSchema):
         return int(value)
 
     elif field_schema.type_ == "LONG":
-        # may throw
-        return int(value)
-
-    elif field_schema.type_ == "MAP":
-        raise NotImplementedError("MAP type not yet implemented.")
-
-    elif field_schema.type_ == "SHORT":
         # may throw
         return int(value)
 

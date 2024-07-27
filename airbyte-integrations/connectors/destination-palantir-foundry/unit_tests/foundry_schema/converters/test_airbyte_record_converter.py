@@ -3,7 +3,7 @@ import unittest
 from destination_palantir_foundry.foundry_schema.converters.airbyte_record_converter import convert_field, \
     convert_ab_record
 from destination_palantir_foundry.foundry_schema.foundry_schema import ArrayFieldSchema, StringFieldSchema, \
-    BooleanFieldSchema, DateFieldSchema, DoubleFieldSchema, IntegerFieldSchema, FloatFieldSchema, LongFieldSchema, \
+    BooleanFieldSchema, DateFieldSchema, DoubleFieldSchema, IntegerFieldSchema, LongFieldSchema, \
     StructFieldSchema, TimestampFieldSchema, FoundrySchema
 
 
@@ -161,20 +161,6 @@ class TestAirbyteRecordConverter(unittest.TestCase):
             value,
             DoubleFieldSchema(
                 name="double",
-                nullable=False,
-            )
-        ) for value in values]
-
-        for result in results:
-            self.assertEqual(result, 1.0001)
-
-    def test_convertField_float_converts(self):
-        values = [1.0001, "1.0001"]
-
-        results = [convert_field(
-            value,
-            FloatFieldSchema(
-                name="float",
                 nullable=False,
             )
         ) for value in values]
