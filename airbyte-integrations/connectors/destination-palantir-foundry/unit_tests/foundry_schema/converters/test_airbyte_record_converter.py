@@ -19,7 +19,7 @@ class TestAirbyteRecordConverter(unittest.TestCase):
             )
         )
 
-        self.assertEquals(result, None)
+        self.assertEqual(result, None)
 
     def test_convertField_nonNullableNone_raises(self):
         value = None
@@ -47,7 +47,7 @@ class TestAirbyteRecordConverter(unittest.TestCase):
             )
         )
 
-        self.assertEquals(result, [])
+        self.assertEqual(result, [])
 
     def test_convertField_arrayWithPrimitiveValues_converts(self):
         value = ["test", "test2"]
@@ -63,7 +63,7 @@ class TestAirbyteRecordConverter(unittest.TestCase):
             )
         )
 
-        self.assertEquals(result, ["test", "test2"])
+        self.assertEqual(result, ["test", "test2"])
 
     def test_convertField_arrayWithPrimitiveValuesAndNulls_converts(self):
         value = ["test", None]
@@ -79,7 +79,7 @@ class TestAirbyteRecordConverter(unittest.TestCase):
             )
         )
 
-        self.assertEquals(result, ["test", None])
+        self.assertEqual(result, ["test", None])
 
     def test_convertField_2dArray_converts(self):
         value = [
@@ -101,7 +101,7 @@ class TestAirbyteRecordConverter(unittest.TestCase):
             )
         )
 
-        self.assertEquals(result, [["test1", "test2"], ["test3"]])
+        self.assertEqual(result, [["test1", "test2"], ["test3"]])
 
     def test_convertField_booleanStringTrue_converts(self):
         values = ["true", "True", "TRUE", True, 1]
@@ -114,7 +114,7 @@ class TestAirbyteRecordConverter(unittest.TestCase):
             )
         ) for value in values]
 
-        self.assertEquals(all(results), True)
+        self.assertEqual(all(results), True)
 
     def test_convertField_booleanStringFalse_converts(self):
         values = ["false", "False", "FALSE", False, 0]
@@ -127,7 +127,7 @@ class TestAirbyteRecordConverter(unittest.TestCase):
             )
         ) for value in values]
 
-        self.assertEquals(any(results), False)
+        self.assertEqual(any(results), False)
 
     def test_convertField_date_converts(self):
         value = "2021-01-23"
@@ -140,7 +140,7 @@ class TestAirbyteRecordConverter(unittest.TestCase):
             )
         )
 
-        self.assertEquals(result, "2021-01-23")
+        self.assertEqual(result, "2021-01-23")
 
     def test_convertField_dateBC_raises(self):
         value = "2021-01-23 BC"
@@ -166,7 +166,7 @@ class TestAirbyteRecordConverter(unittest.TestCase):
         ) for value in values]
 
         for result in results:
-            self.assertEquals(result, 1.0001)
+            self.assertEqual(result, 1.0001)
 
     def test_convertField_float_converts(self):
         values = [1.0001, "1.0001"]
@@ -180,7 +180,7 @@ class TestAirbyteRecordConverter(unittest.TestCase):
         ) for value in values]
 
         for result in results:
-            self.assertEquals(result, 1.0001)
+            self.assertEqual(result, 1.0001)
 
     def test_convertField_integer_converts(self):
         values = [1, "1"]
@@ -194,7 +194,7 @@ class TestAirbyteRecordConverter(unittest.TestCase):
         ) for value in values]
 
         for result in results:
-            self.assertEquals(result, 1)
+            self.assertEqual(result, 1)
 
     def test_convertField_long_converts(self):
         values = [10000000, "10000000"]
@@ -208,7 +208,7 @@ class TestAirbyteRecordConverter(unittest.TestCase):
         ) for value in values]
 
         for result in results:
-            self.assertEquals(result, 10000000)
+            self.assertEqual(result, 10000000)
 
     def test_convertField_string_converts(self):
         values = [1, "1"]
@@ -222,7 +222,7 @@ class TestAirbyteRecordConverter(unittest.TestCase):
         ) for value in values]
 
         for result in results:
-            self.assertEquals(result, "1")
+            self.assertEqual(result, "1")
 
     def test_convertField_stringNonString_converts(self):
         value = {"test": 1}
@@ -235,7 +235,7 @@ class TestAirbyteRecordConverter(unittest.TestCase):
             )
         )
 
-        self.assertEquals(result, '{"test": 1}')
+        self.assertEqual(result, '{"test": 1}')
 
     def test_convertField_struct_convertsNested(self):
         value = {
@@ -274,7 +274,7 @@ class TestAirbyteRecordConverter(unittest.TestCase):
             )
         )
 
-        self.assertEquals(result, {
+        self.assertEqual(result, {
             "test": {
                 "test2": "test2",
                 "test3": None,
@@ -293,7 +293,7 @@ class TestAirbyteRecordConverter(unittest.TestCase):
             )
         )
 
-        self.assertEquals(result, 1658505600000)
+        self.assertEqual(result, 1658505600000)
 
     def test_convertValue_timestampWitTimezone2_converts(self):
         value = "2022-07-22T12:00:00+04:00"
@@ -306,7 +306,7 @@ class TestAirbyteRecordConverter(unittest.TestCase):
             )
         )
 
-        self.assertEquals(result, 1658476800000)
+        self.assertEqual(result, 1658476800000)
 
     def test_convertValue_timestampWitoutTimezone_converts(self):
         value = "2022-07-22T08:00:00"
@@ -319,7 +319,7 @@ class TestAirbyteRecordConverter(unittest.TestCase):
             )
         )
 
-        self.assertEquals(result, 1658476800000)
+        self.assertEqual(result, 1658476800000)
 
     def test_convertRecord_(self):
         schema = FoundrySchema(
@@ -380,7 +380,7 @@ class TestAirbyteRecordConverter(unittest.TestCase):
 
         result = convert_ab_record(record, schema)
 
-        self.assertEquals(result, {
+        self.assertEqual(result, {
             "stringField": "Hello, OpenAI!",
             "booleanField": False,
             "dateField": "2022-01-01",

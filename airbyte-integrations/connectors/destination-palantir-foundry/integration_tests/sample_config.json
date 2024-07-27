@@ -1,0 +1,13 @@
+{
+  "host" : "<YOUR_STACK>.palantirfoundry.com",
+  "auth" : {
+    "client_id" : "<CLIENT_ID>",
+    "client_secret" : "<CLIENT_SECRET>"
+  },
+  "destination_config" : {
+    "project_rid" : "ri.compass.main.folder.<ID>",
+    "materialization_mode" : {
+      "instance" : "foundry_streams"
+    }
+  }
+}

@@ -3,7 +3,7 @@
   "supported_destination_sync_modes" : [
     "append"
   ],
-  "supportsIncremental" : false,
+  "supportsIncremental" : true,
   "supportsNormalization" : false,
   "supportsDBT" : false,
   "connectionSpecification" : {
@@ -19,12 +19,16 @@
     "properties" : {
       "host" : {
         "title" : "Palantir Foundry Host",
-        "description" : "ex: mystack.palantirfoundry.com",
+        "description" : "The domain of your Palantir Foundry stack.",
+        "examples" : [
+          "mystack.palantirfoundry.com"
+        ],
         "type" : "string",
         "order" : 0
       },
       "auth" : {
         "title" : "OAuth 2.0 Client Credentials",
+        "description" : "Third party application credentials to be used for authenticating with and writing to your Foundry instance.",
         "required" : [
           "client_id",
           "client_secret"
@@ -46,6 +50,7 @@
       },
       "destination_config" : {
         "title" : "Destination Configuration",
+        "description" : "Settings for where and how to store the data in your Foundry instance.",
         "type" : "object",
         "required" : [
           "project_rid",
@@ -55,12 +60,17 @@
         "properties" : {
           "project_rid" : {
             "title" : "Project RID",
+            "description" : "The project where data should be written to in your Foundry instance. Your third party application will need to have access to read from and write to this location.",
+            "examples" : [
+              "ri.compass.main.folder.<ID>"
+            ],
             "type" : "string",
             "order" : 0
           },
           "materialization_mode" : {
             "title" : "Materialization Mode",
-            "description" : "The materialization mode specifies in what format to push and store the data in your Foundry instance, either utilizing Foundry Streams or static Foundry Datasets.",
+            "description" : "The materialization mode specifies in what format to push and store the data in your Foundry instance.",
+            "airbyte_hidden" : true,
             "type" : "object",
             "oneOf" : [
               {

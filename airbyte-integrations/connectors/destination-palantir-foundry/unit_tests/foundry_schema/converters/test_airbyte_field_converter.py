@@ -15,7 +15,7 @@ class TestAirbyteSchemaConverter(unittest.TestCase):
 
         foundry_field_schema = convert_ab_field_to_foundry_field("test_field_name", ab_string_field_schema)
 
-        self.assertEquals(foundry_field_schema, StringFieldSchema(
+        self.assertEqual(foundry_field_schema, StringFieldSchema(
             name="test_field_name",
             nullable=False,
             customMetadata={}
@@ -28,7 +28,7 @@ class TestAirbyteSchemaConverter(unittest.TestCase):
 
         foundry_field_schema = convert_ab_field_to_foundry_field("test_field_name", ab_string_field_schema)
 
-        self.assertEquals(foundry_field_schema, StringFieldSchema(
+        self.assertEqual(foundry_field_schema, StringFieldSchema(
             name="test_field_name",
             nullable=True,
             customMetadata={}
@@ -41,7 +41,7 @@ class TestAirbyteSchemaConverter(unittest.TestCase):
 
         foundry_field_schema = convert_ab_field_to_foundry_field("test_field_name", ab_string_field_schema)
 
-        self.assertEquals(foundry_field_schema, BooleanFieldSchema(
+        self.assertEqual(foundry_field_schema, BooleanFieldSchema(
             name="test_field_name",
             nullable=False,
             customMetadata={}
@@ -55,7 +55,7 @@ class TestAirbyteSchemaConverter(unittest.TestCase):
 
         foundry_field_schema = convert_ab_field_to_foundry_field("test_field_name", ab_string_field_schema)
 
-        self.assertEquals(foundry_field_schema, DateFieldSchema(
+        self.assertEqual(foundry_field_schema, DateFieldSchema(
             name="test_field_name",
             nullable=False,
             customMetadata={}
@@ -70,7 +70,7 @@ class TestAirbyteSchemaConverter(unittest.TestCase):
 
         foundry_field_schema = convert_ab_field_to_foundry_field("test_field_name", ab_string_field_schema)
 
-        self.assertEquals(foundry_field_schema, TimestampFieldSchema(
+        self.assertEqual(foundry_field_schema, TimestampFieldSchema(
             name="test_field_name",
             nullable=False,
             customMetadata={}
@@ -85,7 +85,7 @@ class TestAirbyteSchemaConverter(unittest.TestCase):
 
         foundry_field_schema = convert_ab_field_to_foundry_field("test_field_name", ab_string_field_schema)
 
-        self.assertEquals(foundry_field_schema, TimestampFieldSchema(
+        self.assertEqual(foundry_field_schema, TimestampFieldSchema(
             name="test_field_name",
             nullable=False,
             customMetadata={}
@@ -99,7 +99,7 @@ class TestAirbyteSchemaConverter(unittest.TestCase):
 
         foundry_field_schema = convert_ab_field_to_foundry_field("test_field_name", ab_string_field_schema)
 
-        self.assertEquals(foundry_field_schema, TimestampFieldSchema(
+        self.assertEqual(foundry_field_schema, TimestampFieldSchema(
             name="test_field_name",
             nullable=False,
             customMetadata={}
@@ -114,7 +114,7 @@ class TestAirbyteSchemaConverter(unittest.TestCase):
 
         foundry_field_schema = convert_ab_field_to_foundry_field("test_field_name", ab_string_field_schema)
 
-        self.assertEquals(foundry_field_schema, StringFieldSchema(
+        self.assertEqual(foundry_field_schema, StringFieldSchema(
             name="test_field_name",
             nullable=False,
             customMetadata={}
@@ -129,7 +129,7 @@ class TestAirbyteSchemaConverter(unittest.TestCase):
 
         foundry_field_schema = convert_ab_field_to_foundry_field("test_field_name", ab_string_field_schema)
 
-        self.assertEquals(foundry_field_schema, StringFieldSchema(
+        self.assertEqual(foundry_field_schema, StringFieldSchema(
             name="test_field_name",
             nullable=False,
             customMetadata={}
@@ -142,7 +142,7 @@ class TestAirbyteSchemaConverter(unittest.TestCase):
 
         foundry_field_schema = convert_ab_field_to_foundry_field("test_field_name", ab_string_field_schema)
 
-        self.assertEquals(foundry_field_schema, IntegerFieldSchema(
+        self.assertEqual(foundry_field_schema, IntegerFieldSchema(
             name="test_field_name",
             nullable=False,
             customMetadata={}
@@ -156,7 +156,7 @@ class TestAirbyteSchemaConverter(unittest.TestCase):
 
         foundry_field_schema = convert_ab_field_to_foundry_field("test_field_name", ab_string_field_schema)
 
-        self.assertEquals(foundry_field_schema, IntegerFieldSchema(
+        self.assertEqual(foundry_field_schema, IntegerFieldSchema(
             name="test_field_name",
             nullable=False,
             customMetadata={}
@@ -169,7 +169,7 @@ class TestAirbyteSchemaConverter(unittest.TestCase):
 
         foundry_field_schema = convert_ab_field_to_foundry_field("test_field_name", ab_string_field_schema)
 
-        self.assertEquals(foundry_field_schema, DoubleFieldSchema(
+        self.assertEqual(foundry_field_schema, DoubleFieldSchema(
             name="test_field_name",
             nullable=False,
             customMetadata={}
@@ -182,7 +182,7 @@ class TestAirbyteSchemaConverter(unittest.TestCase):
 
         foundry_field_schema = convert_ab_field_to_foundry_field("test_field_name", ab_string_field_schema)
 
-        self.assertEquals(foundry_field_schema, ArrayFieldSchema(
+        self.assertEqual(foundry_field_schema, ArrayFieldSchema(
             name="test_field_name",
             nullable=False,
             customMetadata={},
@@ -198,7 +198,7 @@ class TestAirbyteSchemaConverter(unittest.TestCase):
 
         foundry_field_schema = convert_ab_field_to_foundry_field("test_field_name", ab_string_field_schema)
 
-        self.assertEquals(foundry_field_schema, StructFieldSchema(
+        self.assertEqual(foundry_field_schema, StructFieldSchema(
             name="test_field_name",
             nullable=False,
             customMetadata={},
@@ -217,7 +217,7 @@ class TestAirbyteSchemaConverter(unittest.TestCase):
 
         foundry_field_schema = convert_ab_field_to_foundry_field("test_field_name", ab_string_field_schema)
 
-        self.assertEquals(foundry_field_schema, StructFieldSchema(
+        self.assertEqual(foundry_field_schema, StructFieldSchema(
             name="test_field_name",
             nullable=False,
             customMetadata={},
@@ -243,7 +243,7 @@ class TestAirbyteSchemaConverter(unittest.TestCase):
 
         foundry_field_schema = convert_ab_field_to_foundry_field("test_field_name", ab_string_field_schema)
 
-        self.assertEquals(foundry_field_schema, StringFieldSchema(
+        self.assertEqual(foundry_field_schema, StringFieldSchema(
             name="test_field_name",
             nullable=False,
             customMetadata={},
@@ -263,7 +263,7 @@ class TestAirbyteSchemaConverter(unittest.TestCase):
 
         foundry_field_schema = convert_ab_field_to_foundry_field("test_field_name", ab_string_field_schema)
 
-        self.assertEquals(foundry_field_schema, StringFieldSchema(
+        self.assertEqual(foundry_field_schema, StringFieldSchema(
             name="test_field_name",
             nullable=False,
             customMetadata={},
@@ -276,7 +276,7 @@ class TestAirbyteSchemaConverter(unittest.TestCase):
 
         foundry_field_schema = convert_ab_field_to_foundry_field("test_field_name", ab_string_field_schema)
 
-        self.assertEquals(foundry_field_schema, StringFieldSchema(
+        self.assertEqual(foundry_field_schema, StringFieldSchema(
             name="test_field_name",
             nullable=False,
             customMetadata={},
