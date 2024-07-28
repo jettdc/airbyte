@@ -23,11 +23,11 @@ from destination_palantir_foundry.writer.foundry_streams.foundry_stream_writer i
 from integration_tests.test_schema_and_records import JSON_SCHEMA_ALL_DATA_TYPES, SAMPLE_RECORDS
 
 
-def get_current_milliseconds():
+def _get_current_milliseconds():
     return int(time.time() * 1000)
 
 
-def load_config():
+def _load_config():
     with open("../secrets/config.json", "r") as f:
         return json.loads(f.read())
 
@@ -60,14 +60,14 @@ def _get_state(namespace: Optional[str], stream: str, state: int) -> AirbyteMess
 def _record(namespace: Optional[str], stream_name: str, data: Dict[str, Any]) -> AirbyteMessage:
     return AirbyteMessage(
         type=Type.RECORD,
-        record=AirbyteRecordMessage(stream=stream_name, namespace=namespace, data=data, emitted_at=get_current_milliseconds())
+        record=AirbyteRecordMessage(stream=stream_name, namespace=namespace, data=data, emitted_at=_get_current_milliseconds())
     )
 
 
 class TestDestinationPalantirFoundry(unittest.TestCase):
 
     def setUp(self):
-        self.raw_config = load_config()
+        self.raw_config = _load_config()
         self.config = FoundryConfig.from_raw(self.raw_config)
         self.destination = DestinationPalantirFoundry()
         self.logger = logging.getLogger("airbyte")
@@ -89,7 +89,42 @@ class TestDestinationPalantirFoundry(unittest.TestCase):
         outcome = self.destination.check(self.logger, invalid_config)
         self.assertEqual(outcome.status, Status.FAILED)
 
-    def test_write_incrementalStreamAppend_appendsData(self):
+    def test_write_incrementalStreamAppendAllDataTypes_appendsData(self):
+        test_namespace = str(uuid.uuid4())
+
+        state_message = _get_state(test_namespace, INCREMENTAL_STREAM_NAME, 1)
+
+        catalog = _get_configured_catalog_incremental(test_namespace)
+        stream = catalog.streams[0].stream
+
+        output_states = list(self.destination.write(
+            self.raw_config, catalog,
+            [*[_record(stream.namespace, stream.name, data) for data in SAMPLE_RECORDS], state_message]
+        ))
+
+        self.assertEqual(len(output_states), 1)
+        self.assertEqual(state_message, output_states[0])
+
+        records = self._get_stream_records(stream.namespace, stream.name)
+
+        self.assertEqual(len(records), len(SAMPLE_RECORDS))
+
+        state_message_2 = _get_state(test_namespace, INCREMENTAL_STREAM_NAME, 2)
+        output_states_2 = list(self.destination.write(
+            self.raw_config, catalog,
+            [*[_record(stream.namespace, stream.name, data) for data in SAMPLE_RECORDS], state_message_2]
+        ))
+
+        self.assertEqual(len(output_states_2), 1)
+        self.assertEqual(state_message_2, output_states_2[0])
+
+        records_2 = self._get_stream_records(stream.namespace, stream.name)
+
+        self.assertEqual(len(records_2), len(SAMPLE_RECORDS) * 2)
+
+        self._delete_stream(stream.namespace, stream.name)
+
+    def test_write_incrementalStreamAppendGithubPrs_appendsData(self):
         test_namespace = str(uuid.uuid4())
 
         state_message = _get_state(test_namespace, INCREMENTAL_STREAM_NAME, 1)
