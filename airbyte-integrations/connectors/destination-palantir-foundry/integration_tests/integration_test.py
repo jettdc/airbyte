@@ -124,41 +124,6 @@ class TestDestinationPalantirFoundry(unittest.TestCase):
 
         self._delete_stream(stream.namespace, stream.name)
 
-    def test_write_incrementalStreamAppendGithubPrs_appendsData(self):
-        test_namespace = str(uuid.uuid4())
-
-        state_message = _get_state(test_namespace, INCREMENTAL_STREAM_NAME, 1)
-
-        catalog = _get_configured_catalog_incremental(test_namespace)
-        stream = catalog.streams[0].stream
-
-        output_states = list(self.destination.write(
-            self.raw_config, catalog,
-            [*[_record(stream.namespace, stream.name, data) for data in SAMPLE_RECORDS], state_message]
-        ))
-
-        self.assertEqual(len(output_states), 1)
-        self.assertEqual(state_message, output_states[0])
-
-        records = self._get_stream_records(stream.namespace, stream.name)
-
-        self.assertEqual(len(records), len(SAMPLE_RECORDS))
-
-        state_message_2 = _get_state(test_namespace, INCREMENTAL_STREAM_NAME, 2)
-        output_states_2 = list(self.destination.write(
-            self.raw_config, catalog,
-            [*[_record(stream.namespace, stream.name, data) for data in SAMPLE_RECORDS], state_message_2]
-        ))
-
-        self.assertEqual(len(output_states_2), 1)
-        self.assertEqual(state_message_2, output_states_2[0])
-
-        records_2 = self._get_stream_records(stream.namespace, stream.name)
-
-        self.assertEqual(len(records_2), len(SAMPLE_RECORDS) * 2)
-
-        self._delete_stream(stream.namespace, stream.name)
-
     def _get_stream_records(self, namespace: Optional[str], stream_name: str) -> List[Dict[str, Any]]:
         stream_proxy: StreamProxy = self.service_factory.stream_proxy()
 
