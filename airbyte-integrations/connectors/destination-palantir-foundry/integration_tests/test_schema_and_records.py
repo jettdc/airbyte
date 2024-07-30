@@ -1,7 +1,7 @@
 JSON_SCHEMA_ALL_DATA_TYPES = {
     "type": "object",
     "properties": {
-        "stringField": {
+        "stringField+": {
             "type": "string"
         },
         "booleanField": {
@@ -77,7 +77,7 @@ JSON_SCHEMA_ALL_DATA_TYPES = {
 
 SAMPLE_RECORDS = [
     {
-        "stringField": "Hello, OpenAI!",
+        "stringField+": "Hello, OpenAI!",
         "booleanField": False,
         "dateField": "2022-01-01",
         "timestampWithoutTimezoneField": "2022-01-01T12:00:00",
@@ -96,7 +96,7 @@ SAMPLE_RECORDS = [
         "unionField": "This can be a string, a number, or a boolean"
     },
     {
-        "stringField": "Hello, World!",
+        "stringField+": "Hello, World!",
         "booleanField": False,
         "dateField": "2022-02-02",
         "timestampWithoutTimezoneField": "2022-02-02T13:00:00",
@@ -115,7 +115,7 @@ SAMPLE_RECORDS = [
         "unionField": 1.25
     },
     {
-        "stringField": "Hello, Universe!",
+        "stringField+": "Hello, Universe!",
         "booleanField": True,
         "dateField": "2022-03-03",
         "timestampWithoutTimezoneField": "2022-03-03T14:00:00",
@@ -134,7 +134,7 @@ SAMPLE_RECORDS = [
         "unionField": False
     },
     {
-        "stringField": "Hello, Multiverse!",
+        "stringField+": "Hello, Multiverse!",
         "booleanField": True,
         "dateField": "2022-04-04",
         "timestampWithoutTimezoneField": "2022-04-04T15:00:00",
@@ -153,7 +153,7 @@ SAMPLE_RECORDS = [
         "unionField": "This can be a string, a number, or a boolean"
     },
     {
-        "stringField": "Hello, Everything!",
+        "stringField+": "Hello, Everything!",
         "booleanField": True,
         "dateField": "2022-05-05",
         "timestampWithoutTimezoneField": "2022-05-05T16:00:00",

@@ -7,6 +7,7 @@ from destination_palantir_foundry.foundry_schema.foundry_schema import FoundryFi
     DateFieldSchema, \
     TimestampFieldSchema, BooleanFieldSchema, ArrayFieldSchema, StructFieldSchema, \
     DoubleFieldSchema, LongFieldSchema, FoundrySchema
+from destination_palantir_foundry.utils.avro_names import sanitize_avro_field_name
 
 """
 Type mappings:
@@ -173,7 +174,7 @@ class AirbyteToFoundryConverter:
         ), DEFAULT_FOUNDRY_FIELD_DESCRIPTION)
 
         foundry_field_schema_kwargs = {
-            "name": ab_field_name,
+            "name": sanitize_avro_field_name(ab_field_name) if ab_field_name is not None else None,
             "nullable": nullable,
         }
 
@@ -262,8 +263,9 @@ class AirbyteToFoundryConverter:
 
             converted = {}
             for key, value in value.items():
-                field_sub_schema = _find_field_schema(key, field_schema.subSchemas)
-                converted[key] = AirbyteToFoundryConverter.convert_record_field(value, field_sub_schema)
+                sanitized_key_name = sanitize_avro_field_name(key)
+                field_sub_schema = _find_field_schema(sanitized_key_name, field_schema.subSchemas)
+                converted[sanitized_key_name] = AirbyteToFoundryConverter.convert_record_field(value, field_sub_schema)
 
             return converted
 
@@ -278,7 +280,8 @@ class AirbyteToFoundryConverter:
         converted = {}
 
         for key, value in airbyte_record.items():
-            field_schema = _find_field_schema(key, foundry_schema.fieldSchemaList)
-            converted[key] = AirbyteToFoundryConverter.convert_record_field(value, field_schema)
+            sanitized_key = sanitize_avro_field_name(key)
+            field_schema = _find_field_schema(sanitized_key, foundry_schema.fieldSchemaList)
+            converted[sanitized_key] = AirbyteToFoundryConverter.convert_record_field(value, field_schema)
 
         return converted
