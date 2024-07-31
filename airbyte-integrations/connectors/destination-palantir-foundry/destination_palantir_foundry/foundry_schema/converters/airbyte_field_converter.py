@@ -1,4 +1,5 @@
 import json
+import logging
 from typing import Optional, Dict, Any, List, NamedTuple, Type, Union
 
 from dateutil import parser, tz
@@ -8,6 +9,9 @@ from destination_palantir_foundry.foundry_schema.foundry_schema import FoundryFi
     TimestampFieldSchema, BooleanFieldSchema, ArrayFieldSchema, StructFieldSchema, \
     DoubleFieldSchema, LongFieldSchema, FoundrySchema
 from destination_palantir_foundry.utils.avro_names import sanitize_avro_field_name
+
+logger = logging.getLogger("airbyte")
+
 
 """
 Type mappings:
@@ -288,6 +292,9 @@ class AirbyteToFoundryConverter:
                 if field_sub_schema is not None:
                     converted[sanitized_key_name] = AirbyteToFoundryConverter.convert_record_field(
                         value, field_sub_schema)
+                else:
+                    logger.warn(
+                        f"Found a field not in the foundry schema: {sanitized_key}")
 
             return converted
 
@@ -310,5 +317,8 @@ class AirbyteToFoundryConverter:
             if field_schema is not None:
                 converted[sanitized_key] = AirbyteToFoundryConverter.convert_record_field(
                     value, field_schema)
+            else:
+                logger.warn(
+                    f"Found a field not in the foundry schema: {sanitized_key}")
 
         return converted
