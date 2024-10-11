@@ -17,26 +17,13 @@ logger = logging.getLogger("airbyte")
 
 
 class FoundryStreamWriter(Writer):
-    SCOPES = [  # TODO(jcrowson): find better scoping strategy
-        "streaming:read",
-        "streaming:create",
-        "streaming:delete",
-        "streaming:manage-resource",
-        "streaming:write",
-        "streaming:read-resource",
-        "streaming:read",
-        "streaming:create",
-        "streaming:delete",
-        "streaming:manage-resource",
-        "streaming:write",
-        "streaming:read-resource",
+    SCOPES = [
+        "api:streams-write",
+        "api:streams-read",
         "api:datasets-write",
         "api:datasets-read",
-        "compass:read-branch",
-        "compass:discover",
-        "compass:view",
-        "compass:read-resource",
-        "compass:delete",
+        "api:filesystem-read",
+        "api:filesystem-write",
     ]
 
     def __init__(
@@ -61,13 +48,15 @@ class FoundryStreamWriter(Writer):
         namespace, stream_name = airbyte_stream.stream.namespace, airbyte_stream.stream.name
         resource_name = get_foundry_resource_name(namespace, stream_name)
 
-        maybe_resource = self.project_helper.maybe_get_resource_by_name(self.parent_rid, resource_name)
+        maybe_resource = self.project_helper.maybe_get_resource_by_name(
+            self.parent_rid, resource_name)
 
         foundry_stream_schema = self.stream_schema_provider.get_foundry_stream_schema(
             airbyte_stream.stream)
 
         if maybe_resource is not None:
-            maybe_stream = self.stream_catalog.get_stream(maybe_resource.rid).root
+            maybe_stream = self.stream_catalog.get_stream(
+                maybe_resource.rid).root
             if maybe_stream is None:
                 raise ValueError(
                     f"Foundry resource '{resource_name}' ({maybe_resource.rid}) was found but it is not a stream.")
@@ -105,7 +94,8 @@ class FoundryStreamWriter(Writer):
         self.buffer_registry.add_record_to_buffer(airbyte_record)
 
     def flush_to_destination(self, namespace: str, stream_name: str):
-        buffer_entry = self.buffer_registry.flush_buffer(namespace, stream_name)
+        buffer_entry = self.buffer_registry.flush_buffer(
+            namespace, stream_name)
         if len(buffer_entry.records) == 0:
             return
 

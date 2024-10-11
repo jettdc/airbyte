@@ -14,7 +14,8 @@ class FoundryStreamsMaterializationMode(BaseModel):
 
 class DestinationConfig(BaseModel):
     project_rid: str
-    materialization_mode: Union[FoundryStreamsMaterializationMode] = Field(..., discriminator="instance")
+    materialization_mode: Union[FoundryStreamsMaterializationMode] = Field(
+        ..., discriminator="instance")
 
 
 class FoundryConfig(BaseModel):

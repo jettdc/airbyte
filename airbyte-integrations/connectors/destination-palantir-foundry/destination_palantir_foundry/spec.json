@@ -1,90 +1,94 @@
 {
-  "documentationUrl" : "https://docs.airbyte.com/integrations/destinations/palantir-foundry",
-  "supported_destination_sync_modes" : [
+  "documentationUrl": "https://docs.airbyte.com/integrations/destinations/palantir-foundry",
+  "supported_destination_sync_modes": [
     "append"
   ],
-  "supportsIncremental" : true,
-  "supportsNormalization" : false,
-  "supportsDBT" : false,
-  "connectionSpecification" : {
-    "$schema" : "http://json-schema.org/draft-07/schema#",
-    "title" : "Palantir Foundry",
-    "type" : "object",
-    "required" : [
+  "supportsIncremental": true,
+  "supportsNormalization": false,
+  "supportsDBT": false,
+  "connectionSpecification": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Palantir Foundry",
+    "type": "object",
+    "required": [
       "host",
       "auth",
       "destination_config"
     ],
-    "additionalProperties" : false,
-    "properties" : {
-      "host" : {
-        "title" : "Palantir Foundry Host",
-        "description" : "The domain of your Palantir Foundry stack.",
-        "examples" : [
-          "mystack.palantirfoundry.com"
+    "additionalProperties": false,
+    "properties": {
+      "host": {
+        "title": "Palantir Foundry Host",
+        "description": "The domain of your Palantir Foundry stack.",
+        "type": "string",
+        "pattern": "^(?:[a-zA-Z0-9-]+\\.)*palantirfoundry\\.com$",
+        "pattern_descriptor": "[stackname].palantirfoundry.com",
+        "examples": [
+          "acme.palantirfoundry.com"
         ],
-        "type" : "string",
-        "order" : 0
+        "order": 0
       },
-      "auth" : {
-        "title" : "OAuth 2.0 Client Credentials",
-        "description" : "Third party application credentials to be used for authenticating with and writing to your Foundry instance.",
-        "required" : [
+      "auth": {
+        "title": "OAuth 2.0 Client Credentials",
+        "description": "Third party application credentials to be used for authenticating with and writing to your Foundry instance.",
+        "required": [
           "client_id",
           "client_secret"
         ],
-        "type" : "object",
-        "properties" : {
-          "client_id" : {
-            "title" : "Client ID",
-            "type" : "string",
-            "order" : 0
+        "type": "object",
+        "properties": {
+          "client_id": {
+            "title": "Client ID",
+            "type": "string",
+            "order": 0
           },
-          "client_secret" : {
-            "title" : "Client Secret",
-            "type" : "string",
-            "order" : 1,
-            "airbyte_secret" : true
+          "client_secret": {
+            "title": "Client Secret",
+            "type": "string",
+            "order": 1,
+            "airbyte_secret": true
           }
         }
       },
-      "destination_config" : {
-        "title" : "Destination Configuration",
-        "description" : "Settings for where and how to store the data in your Foundry instance.",
-        "type" : "object",
-        "required" : [
+      "destination_config": {
+        "title": "Destination Configuration",
+        "description": "Settings for where and how to store the data in your Foundry instance.",
+        "type": "object",
+        "required": [
           "project_rid",
           "materialization_mode"
         ],
-        "order" : 2,
-        "properties" : {
-          "project_rid" : {
-            "title" : "Project RID",
-            "description" : "The project where data should be written to in your Foundry instance. Your third party application will need to have access to read from and write to this location.",
-            "examples" : [
-              "ri.compass.main.folder.<ID>"
+        "order": 2,
+        "properties": {
+          "project_rid": {
+            "title": "Project RID",
+            "description": "The project where data should be written to in your Foundry instance. Your third party application will need to have access to read from and write to this location.",
+            "type": "string",
+            "pattern": "^ri\\.compass\\.main\\.folder\\.[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+            "pattern_descriptor": "ri.compass.main.folder.[id]",
+            "examples": [
+              "ri.compass.main.folder.afeee1f6-3743-4ad3-aac3-716c0d542497"
             ],
-            "type" : "string",
-            "order" : 0
+            "order": 0
           },
-          "materialization_mode" : {
-            "title" : "Materialization Mode",
-            "description" : "The materialization mode specifies in what format to push and store the data in your Foundry instance.",
-            "airbyte_hidden" : true,
-            "type" : "object",
-            "oneOf" : [
+          "materialization_mode": {
+            "title": "Materialization Mode",
+            "description": "The materialization mode specifies in what format to push and store the data in your Foundry instance.",
+            "airbyte_hidden": true,
+            "type": "object",
+            "oneOf": [
               {
-                "title" : "Foundry Streams",
-                "type" : "object",
-                "order" : 0,
-                "properties" : {
-                  "instance" : {
-                    "type" : "string",
-                    "enum" : [
+                "title": "Foundry Streams",
+                "type": "object",
+                "order": 0,
+                "properties": {
+                  "instance": {
+                    "type": "string",
+                    "enum": [
                       "foundry_streams"
                     ],
-                    "default" : "foundry_streams",
-                    "airbyte_hidden" : true
+                    "default": "foundry_streams",
+                    "airbyte_hidden": true
                   }
                 }
               }
